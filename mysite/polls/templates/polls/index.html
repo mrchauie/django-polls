@@ -1,13 +1,20 @@
+<!-- In general, extend a file to use its code as a base for multiple templates and 
+    include a file to load a single section of code within the context of another template. -->
+{% extends 'polls/header.html' %}
+
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'polls/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'polls/css/bootstrap.css' %}">
 
+{% block content %}
 
-{% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
+    {% if latest_question_list %}
+        <ul>
+        {% for question in latest_question_list %}
+            <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No polls are available.</p>
+    {% endif %}
+
+{% endblock %}
