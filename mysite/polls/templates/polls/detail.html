@@ -1,3 +1,10 @@
+{% extends 'polls/header.html' %}
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'polls/css/bootstrap.css' %}">
+
+{% block content %}
+
 <form action="{% url 'polls:vote' question.id %}" method="post">
     {% csrf_token %}
     <fieldset>
@@ -10,3 +17,5 @@
     </fieldset>
     <input type="submit" value="Vote">
 </form>
+
+{% endblock %}
