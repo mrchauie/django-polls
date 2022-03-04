@@ -1,10 +1,8 @@
-<!-- In general, extend a file to use its code as a base for multiple templates and 
-    include a file to load a single section of code within the context of another template. -->
-{% extends 'polls/header.html' %}
+{% include 'polls/header.html' %}
+{% include 'polls/navbar.html' %}
 
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'polls/css/bootstrap.css' %}">
-
+<main class="container">
 {% block content %}
 
     {% if latest_question_list %}
@@ -18,3 +16,5 @@
     {% endif %}
 
 {% endblock %}
+</main>
+{% include 'polls/footer.html' %}

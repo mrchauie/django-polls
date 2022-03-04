@@ -1,9 +1,9 @@
-{% extends 'polls/header.html' %}
+{% include 'polls/header.html' %}
 
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'polls/css/bootstrap.css' %}">
 
-{% block content %}
+<!-- {% block content %} -->
 
 <form action="{% url 'polls:vote' question.id %}" method="post">
     {% csrf_token %}
@@ -18,4 +18,5 @@
     <input type="submit" value="Vote">
 </form>
 
-{% endblock %}
+<!-- {% endblock %} -->
+{% include 'polls/footer.html' %}
