@@ -1,20 +1,19 @@
-{% include 'polls/header.html' %}
-{% include 'polls/navbar.html' %}
-
-{% load static %}
-<main class="container">
+{% extends 'polls/base.html' %}
 {% block content %}
 
-    {% if latest_question_list %}
-        <ul>
-        {% for question in latest_question_list %}
-            <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>No polls are available.</p>
-    {% endif %}
+<div class="container">
+{% if request.user.is_authenticated %}
+        <h1>Hello, {{ user.username }}</h1>
+        {% if latest_question_list %}
+            <ul>
+            {% for question in latest_question_list %}
+                <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
 
+{% else %}
+    <h1>Please log in!</h1>
+{% endif %}
+        </div>
 {% endblock %}
-</main>
-{% include 'polls/footer.html' %}
