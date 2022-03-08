@@ -1,1 +1,1 @@
-web: gunicorn django-polls.wsgi
+web: gunicorn django-polls-willchau.wsgi
