@@ -130,3 +130,10 @@ ACCOUNT_SIGNUP_REDIRECT_URL = '/polls/'
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
+
+
+# hello
+
+
+#django-polls/mysite
+#django-polls/polls
