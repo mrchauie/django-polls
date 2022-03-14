@@ -1,14 +1,11 @@
-from django.http import HttpResponse, HttpResponseRedirect
-from .models import Question
-from django.http import Http404
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import generic
 from .models import Question, Choice
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
 
 # classes to handle auth
 class UserLoginView(LoginView):
