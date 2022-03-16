@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-import django_heroku
+import django_heroku, os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-qma44683_-xtp9!+do$1z*4c82a$di^ez!r4pb=)af1*mts*6v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '0.0.0.0', '127.0.0.1', 'django-polls-willchau.herokuapp.com']
 
 # Application definition
 
@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
-]
+    ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -80,8 +80,10 @@ DATABASES = {
         'NAME': 'polls_database',
         'USER': 'polls_database',
         'PASSWORD': 'admin',
-        'HOST': 'localhost',
-        'PORT': '5432'  
+        'HOST' : 'localhost',
+        'PORT' : '5432'
+        # 'HOST': 'postgres://jreodcskabjydg:72815ffb47622d807c965a1d6e1a4f29a39802055a9eab0e6fff08be7b7cd05e@ec2-44-198-29-193.compute-1.amazonaws.com:5432/denc89io5cb5r',
+        # 'PORT': '5432'  
     }
 }
 
