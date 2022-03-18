@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-import django_heroku, os
+import django_heroku
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -82,8 +82,6 @@ DATABASES = {
         'PASSWORD': 'admin',
         'HOST' : 'localhost',
         'PORT' : '5432'
-        # 'HOST': 'postgres://jreodcskabjydg:72815ffb47622d807c965a1d6e1a4f29a39802055a9eab0e6fff08be7b7cd05e@ec2-44-198-29-193.compute-1.amazonaws.com:5432/denc89io5cb5r',
-        # 'PORT': '5432'  
     }
 }
 
