@@ -34,7 +34,7 @@ class Choice(models.Model):
         return self.choice_text
 
 class UserProfile(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.CharField(verbose_name='phone', max_length=30)
     
 
