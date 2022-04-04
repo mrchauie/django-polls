@@ -3,6 +3,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib import admin
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 
     
 class Question(models.Model):
@@ -36,6 +37,12 @@ class Choice(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.CharField(verbose_name='phone', max_length=30)
+    can_delete = False
     
 
-
+def create_profile(sender, **kwargs):
+    user = kwargs["instance"]
+    if kwargs["created"]:
+        user_profile = UserProfile(user=user)
+        user_profile.save()
+    post_save.connect(create_profile, sender=User)

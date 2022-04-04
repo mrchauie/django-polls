@@ -24,12 +24,12 @@ class UserProfileInline(admin.StackedInline):
     can_delete = False
     verbose_name_plural = 'Profile'
 
-class UserAdmin(BaseUserAdmin):
+class UserProfile(BaseUserAdmin):
     inlines = (UserProfileInline,)
 
 admin.site.register(Question, QuestionAdmin)
 admin.site.unregister(User)
-admin.site.register(User, UserAdmin)
+admin.site.register(User, UserProfile)
 
 # admin.site.register(Choice)
 
