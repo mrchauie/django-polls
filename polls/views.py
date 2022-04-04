@@ -1,11 +1,16 @@
+from asyncio.format_helpers import _format_callback_source
+from django.db import transaction
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse, reverse_lazy
-from django.views import generic
-from .models import Question, Choice
+from django.views.generic import UpdateView, DetailView, ListView, CreateView
+
+from .models import Question, Choice, UserProfile
+from .forms import *
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.forms import *
 
 # classes to handle auth
 class UserLoginView(LoginView):
@@ -13,13 +18,12 @@ class UserLoginView(LoginView):
     form_class = AuthenticationForm
     success_url = reverse_lazy('polls:index')
 
-class SignUpView(generic.CreateView):
+class SignUpView(CreateView):
     form_class = UserCreationForm
     template_name = 'registration/signup.html'
     success_message = "Your profile was created successfully"
-    success_url = reverse_lazy('polls:index')
 
-class IndexView(generic.ListView):    
+class IndexView(ListView):    
     template_name = 'polls/index.html'
     context_object_name = 'latest_question_list'
 
@@ -27,13 +31,61 @@ class IndexView(generic.ListView):
         """Return the last five published questions."""
         return Question.objects.order_by('-pub_date')[:5]
 
-class DetailView(LoginRequiredMixin, generic.DetailView):
+class QuestionDetailView(LoginRequiredMixin, DetailView):
     model = Question
     template_name = 'polls/detail.html'
 
-class ResultsView(LoginRequiredMixin, generic.DetailView):
+class QuestionResultsView(LoginRequiredMixin, DetailView):
     model = Question
     template_name = 'polls/results.html'
+
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    # model = UserProfile
+    form_class = UserProfileForm
+    template_name = 'accounts/view_profile.html'
+    success_url = reverse_lazy('polls:profile')
+
+    def get_context_data(self, **kwargs):
+            data = super(ProfileUpdateView, self).get_context_data(**kwargs)
+            if self.request.POST:
+                data['userProfile'] = userProfileFormSet(self.request.POST)
+            else:
+                data['userProfile'] = userProfileFormSet()
+            return data
+
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        profile = context['userProfile']
+        if profile.is_valid():
+            self.object = form.save()
+            profile.instance = self.object
+            profile.save()
+        return super(ProfileUpdateView, self).form_valid(form)
+
+    def get_success_url(self):
+        #  return reverse('polls:profile', kwargs={'pk': self.pk})
+        return reverse('polls:profile', kwargs={'pk': self.request.user.id})
+
+
+    
+
+    def get_queryset(self):
+        userProfile = User.objects.get(id=self.request.user.id)
+        print(userProfile)
+        return User.objects.filter(id=userProfile.id)
+
+
+# class SuccessView(LoginRequiredMixin, DetailView):
+#     model = UserProfile
+#     template_name = 'accounts/view_profile.html'
+
+# class EditProfile(LoginRequiredMixin, generic.FormView):
+#     model = UserProfile
+#     template_name = 'accounts/edit_profile.html'
+#     context_object_name = 'edit_profile'
+#     success_url = '/accounts/view_profile.html'
+
 
 
 def vote(request, question_id):

@@ -1,0 +1,18 @@
+{% extends 'polls/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <h2>Profile</h2>
+  {{ user.username}}<br>
+  {{ user.email}}<br>
+  {{ user.id }}
+  {{ userProfile.phone}}
+
+  <div class="signup">
+    <form method="post">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+{% endblock %}
